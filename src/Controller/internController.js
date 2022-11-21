@@ -25,10 +25,11 @@ try{
            return res.status(400).send({status:false, error:"email already taken"}) 
         }
     }
-    if(!mobile|| mobile==""){
+    if(!mobile || mobile==(null||undefined||"")){
         return res.status(400).send({status:false,error:"Mobile is required"})
     }else{
-        if (!(/^[0]?[6789]\d{9}$/).test(mobile.trim())){
+        if(typeof (mobile)==='string') return res.status(400).send({status:false,error:"Mobile no. should be type of Number"})
+        if (!(/^[0]?[6789]\d{9}$/).test(mobile)){
             return res.status(400).send({status:false,error:"Please provide valid mobile"})
         }
         let duplicateMobile=await internModel.find({mobile:mobile})
@@ -48,8 +49,8 @@ try{
         
         data.collegeId=collegedetail._id
 
-        let internData= await internModel.create(data)
-        return res.status(201).status({status:false, message:"Intern Created Successfully", data:internData})
+        let internData= await internModel.create(data).populate('collegeId')
+        return res.status(201).send({status:false, message:"Intern Created Successfully", data:internData})
     }
 }
 catch(error){
