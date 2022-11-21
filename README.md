@@ -1,4 +1,4 @@
-# Uranium
+# Lithium
 
 ## Open to Intern Project Requirement
 
