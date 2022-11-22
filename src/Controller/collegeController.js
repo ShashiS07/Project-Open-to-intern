@@ -18,9 +18,7 @@ catch(error){
 const getcollegeinterns=async function(req,res){
     try{
         let collegeName=req.query.collegeName
-        if(Object.values(req.query)==0){
-            return res.status(400).send({status:false,message:"Please provide query"})
-        }
+
         if(!collegeName) return res.status(400).send({status:false,message:"College Name is required"})
 
         const college= await collegeModel.findOne({name:collegeName},{isDeleted:false})
@@ -28,6 +26,8 @@ const getcollegeinterns=async function(req,res){
 
         const internData= await internModel.find({collegeId:college._id},{isDeleted:false})
         
+        if(internData.length==0) return res.status(404).send({status:false,message:"No interns found"})
+
         const collegeDetails={
             name:college.name,
             fullName:college.fullName,
