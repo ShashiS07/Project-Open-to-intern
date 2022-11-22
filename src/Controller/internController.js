@@ -7,7 +7,7 @@ try{
     let {collegeName}=data
 
         let collegedetail= await collegeModel.findOne({name:collegeName},{isDeleted:false})
-        if(!collegedetail) return res.status(404).send({status:false, error:"Not found"})
+        if(!collegedetail) return res.status(404).send({status:false, message:"Not found"})
         
         data.collegeId=collegedetail._id
 

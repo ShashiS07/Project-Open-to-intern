@@ -6,7 +6,7 @@ try{
     let data=req.body
    
     let saveddata= await collegeModel.create(data)
-    return res.status(201).send({status:true, message:saveddata})
+    return res.status(201).send({status:true, message:"College Created Successfully",data:saveddata})
 }
 catch(error){
     return res.status(500).send({status:false, error:error.message})
@@ -19,12 +19,12 @@ const getcollegeinterns=async function(req,res){
     try{
         let collegeName=req.query.collegeName
         if(Object.values(req.query)==0){
-            return res.status(400).send({status:false,error:"Please provide query"})
+            return res.status(400).send({status:false,message:"Please provide query"})
         }
-        if(!collegeName) return res.status(400).send({status:false,error:"College Name is required"})
+        if(!collegeName) return res.status(400).send({status:false,message:"College Name is required"})
 
         const college= await collegeModel.findOne({name:collegeName},{isDeleted:false})
-        if(!college) return res.status(404).send({status:false,error:"College not found"})
+        if(!college) return res.status(404).send({status:false,message:"College not found"})
 
         const internData= await internModel.find({collegeId:college._id},{isDeleted:false})
         

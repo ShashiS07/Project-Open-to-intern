@@ -1,24 +1,24 @@
 const internModel=require('../Model/internModel')
 const collegeModel=require('../Model/collegeModel')
 
-// ========================regex validation==================================================
+// =========================regex validation===========================================
 
-const isvalidChar=(/^([a-zA-Z_]+\s)*[a-zA-Z_]{2,50}$/)
+const isvalidChar=(/^([a-zA-Z,-:_]+\s)*[a-zA-Z_]{2,50}$/)
 const isvalidlink=(/^https?:\/\/.*\.[s3].*\.(png|gif|webp|jpeg|jpg)\??.*$/gim)
 const isvalidEmail=(/^\w+([\.]?\w+)@\w+([\.]?\w+)(\.\w{2,3})+$/)
 const isvalidNumber=(/^[0]?[6789]\d{9}$/)
 
-// ==============================validation for college======================================
+// ==========================validation for college=====================================
 
 const validationforcollege= async function(req,res,next){
     try{
         let data=req.body
         const {name,fullName,logoLink}=data
         if(Object.values(data).length==0){
-            return res.status(400).send({status:false,error:"All fields are Mandatory"})
+            return res.status(400).send({status:false,message:"All fields are Mandatory"})
         }
         if(!name){ 
-            return res.status(400).send({status:false, error:"Name is required"})
+            return res.status(400).send({status:false, message:"Name is required"})
         }else{
             if(!isvalidChar.test(name)) return res.status(400).send({status:false,error:"This name contains certain characters that aren't allowed"})
     
@@ -27,7 +27,7 @@ const validationforcollege= async function(req,res,next){
         }
     
         if(!fullName){
-            return res.status(400).send({status:false, error:"fullName is required"})
+            return res.status(400).send({status:false, message:"fullName is required"})
         }else{
             if(!isvalidChar.test(fullName)) return res.status(400).send({status:false,error:"fullName contains certain characters that aren't allowed"})
         }
@@ -44,7 +44,7 @@ const validationforcollege= async function(req,res,next){
         }
     }
 
-// ==============================validation for intern========================================
+// ==========================validation for intern==================================
 
 const validationforintern=async function(req,res,next){
     try{
@@ -52,41 +52,41 @@ const validationforintern=async function(req,res,next){
         let {name,email,mobile,collegeName}=data
     
         if(Object.values(data).length==0){
-            return res.status(400).send({status:false, error:"All fields are Mandatory"})
+            return res.status(400).send({status:false, message:"All fields are Mandatory"})
         }
         if(!name){ 
-            return res.status(400).send({status:false, error:"Name is required"})
+            return res.status(400).send({status:false, message:"Name is required"})
         }else{
             if(!isvalidChar.test(name)) return res.status(400).send({status:false,error:"This name contains certain characters that aren't allowed"})
         }
         if(!email){
-            return res.status(400).send({status:false,error:"email is required"})
+            return res.status(400).send({status:false,message:"email is required"})
         }else{
             if (!isvalidEmail.test(email)) {
-                return res.status(400).send({status:false, error:"please provide valid email"})
+                return res.status(400).send({status:false, message:"please provide valid email"})
             }
             let duplicateEmail=await internModel.find({email:email})
             if(duplicateEmail.length>0){
-               return res.status(400).send({status:false, error:"email already taken"}) 
+               return res.status(400).send({status:false, message:"email already taken"}) 
             }
         }
         if(!mobile || mobile==""){
-            return res.status(400).send({status:false,error:"Mobile is required"})
+            return res.status(400).send({status:false,message:"Mobile is required"})
         }else{
             if(typeof (mobile)==='string') return res.status(400).send({status:false,error:"Mobile no. should be type of Number"})
             if (!isvalidNumber.test(mobile)){
-                return res.status(400).send({status:false,error:"Please provide valid mobile"})
+                return res.status(400).send({status:false,message:"Please provide valid mobile"})
             }
             let duplicateMobile=await internModel.find({mobile:mobile})
             if(duplicateMobile.length>0){
-               return res.status(400).send({status:false, error:"Mobile No. already taken"}) 
+               return res.status(400).send({status:false, message:"Mobile No. already taken"}) 
             }
         }
         if(!collegeName || collegeName==""){
-        return res.status(400).send({status:false,error:"College Name is required"})
+        return res.status(400).send({status:false,message:"College Name is required"})
         }else{
             if(!isvalidChar.test(collegeName)){
-                return res.status(400).send({status:false,error:"Please provide valid college name"})
+                return res.status(400).send({status:false,message:"Please provide valid college name"})
             }
         }
         next()
