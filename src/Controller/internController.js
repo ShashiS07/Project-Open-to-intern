@@ -11,7 +11,7 @@ try{
         
         data.collegeId=collegedetail._id
 
-        let internData= await (await internModel.create(data)).populate('collegeId')
+        let internData= await internModel.create(data)
         return res.status(201).send({status:true, message:"Intern Created Successfully", data:internData})
     }
 catch(error){
