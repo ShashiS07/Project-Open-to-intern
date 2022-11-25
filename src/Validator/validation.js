@@ -73,7 +73,6 @@ const validationforintern=async function(req,res,next){
         if(!mobile || mobile==""){
             return res.status(400).send({status:false,message:"Mobile is required"})
         }else{
-            if(typeof (mobile)==='string') return res.status(400).send({status:false,error:"Mobile no. should be type of Number"})
             if (!isvalidNumber.test(mobile)){
                 return res.status(400).send({status:false,message:"Please provide valid mobile"})
             }
