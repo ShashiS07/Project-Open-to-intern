@@ -16,6 +16,7 @@ catch(error){
 // ==============================get college details======================================
 
 const getcollegeinterns=async function(req,res){
+    res.setHeader('Access-Control-Allow-Origin','*')
     try{
         let collegeName=req.query.collegeName
 
@@ -26,7 +27,7 @@ const getcollegeinterns=async function(req,res){
 
         const internData= await internModel.find({collegeId:college._id},{isDeleted:false})
         
-        if(internData.length==0) return res.status(404).send({status:false,message:"No interns found"})
+        if(internData.length==0) return res.status(200).send({status:false,message:"No interns found"})
 
         const collegeDetails={
             name:college.name,
