@@ -9,6 +9,13 @@ app.use(bodyParser.json());
 app.use(multer().any())
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use (
+    function (req, res, next) {
+        res.setHeader("Access-Control-Allow-Origin",'*')
+        next();
+  }
+  );
+
 mongoose.connect("mongodb+srv://Shashi_Shekhar_Singh:Shashi0708@myproject.mb3u3za.mongodb.net/Group-17_database?authSource=admin&replicaSet=atlas-lhj98j-shard-0&readPreference=primary&ssl=true",{useNewUrlParser:true})
 
 .then(()=>console.log("MongoDB is connected"))

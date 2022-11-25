@@ -16,7 +16,7 @@ catch(error){
 // ==============================get college details======================================
 
 const getcollegeinterns=async function(req,res){
-    res.setHeader('Access-Control-Allow-Origin','*')
+    // res.setHeader('Access-Control-Allow-Origin','*')
     try{
         let collegeName=req.query.collegeName
 
